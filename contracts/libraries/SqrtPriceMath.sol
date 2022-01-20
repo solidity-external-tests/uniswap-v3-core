@@ -31,6 +31,7 @@ library SqrtPriceMath {
         uint256 amount,
         bool add
     ) internal pure returns (uint160) {
+        unchecked {
         // we short circuit amount == 0 because the result is otherwise not guaranteed to equal the input price
         if (amount == 0) return sqrtPX96;
         uint256 numerator1 = uint256(liquidity) << FixedPoint96.RESOLUTION;
@@ -53,6 +54,7 @@ library SqrtPriceMath {
             uint256 denominator = numerator1 - product;
             return FullMath.mulDivRoundingUp(numerator1, sqrtPX96, denominator).toUint160();
         }
+        }
     }
 
     /// @notice Gets the next sqrt price given a delta of token1
@@ -71,6 +73,7 @@ library SqrtPriceMath {
         uint256 amount,
         bool add
     ) internal pure returns (uint160) {
+        unchecked {
         // if we're adding (subtracting), rounding down requires rounding the quotient down (up)
         // in both cases, avoid a mulDiv for most inputs
         if (add) {
@@ -93,6 +96,7 @@ library SqrtPriceMath {
             require(sqrtPX96 > quotient);
             // always fits 160 bits
             return uint160(sqrtPX96 - quotient);
+        }
         }
     }
 

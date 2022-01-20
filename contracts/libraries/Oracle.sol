@@ -33,6 +33,7 @@ library Oracle {
         int24 tick,
         uint128 liquidity
     ) private pure returns (Observation memory) {
+        unchecked {
         uint32 delta = blockTimestamp - last.blockTimestamp;
         return
             Observation({
@@ -42,6 +43,7 @@ library Oracle {
                     ((uint160(delta) << 128) / (liquidity > 0 ? liquidity : 1)),
                 initialized: true
             });
+        }
     }
 
     /// @notice Initialize the oracle array by writing the first slot. Called once for the lifecycle of the observations array
@@ -251,6 +253,7 @@ library Oracle {
         uint128 liquidity,
         uint16 cardinality
     ) internal view returns (int56 tickCumulative, uint160 secondsPerLiquidityCumulativeX128) {
+        unchecked {
         if (secondsAgo == 0) {
             Observation memory last = self[index];
             if (last.blockTimestamp != time) last = transform(last, time, tick, liquidity);
@@ -283,6 +286,7 @@ library Oracle {
                         ) * targetDelta) / observationTimeDelta
                     )
             );
+        }
         }
     }
 

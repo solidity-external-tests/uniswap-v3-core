@@ -71,6 +71,7 @@ library Tick {
         // calculate fee growth below
         uint256 feeGrowthBelow0X128;
         uint256 feeGrowthBelow1X128;
+        unchecked {
         if (tickCurrent >= tickLower) {
             feeGrowthBelow0X128 = lower.feeGrowthOutside0X128;
             feeGrowthBelow1X128 = lower.feeGrowthOutside1X128;
@@ -92,6 +93,7 @@ library Tick {
 
         feeGrowthInside0X128 = feeGrowthGlobal0X128 - feeGrowthBelow0X128 - feeGrowthAbove0X128;
         feeGrowthInside1X128 = feeGrowthGlobal1X128 - feeGrowthBelow1X128 - feeGrowthAbove1X128;
+        }
     }
 
     /// @notice Updates a tick and returns true if the tick was flipped from initialized to uninitialized, or vice versa

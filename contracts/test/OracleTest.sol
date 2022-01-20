@@ -31,7 +31,9 @@ contract OracleTest {
     }
 
     function advanceTime(uint32 by) public {
-        time += by;
+        unchecked {
+            time += by;
+        }
     }
 
     struct UpdateParams {
