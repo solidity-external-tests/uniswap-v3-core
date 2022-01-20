@@ -274,7 +274,7 @@ library Oracle {
             uint32 targetDelta = target - beforeOrAt.blockTimestamp;
             return (
                 beforeOrAt.tickCumulative +
-                    ((atOrAfter.tickCumulative - beforeOrAt.tickCumulative) / observationTimeDelta) *
+                    ((atOrAfter.tickCumulative - beforeOrAt.tickCumulative) / int56(uint56(observationTimeDelta))) *
                     int56(uint56(targetDelta)),
                 beforeOrAt.secondsPerLiquidityCumulativeX128 +
                     uint160(
